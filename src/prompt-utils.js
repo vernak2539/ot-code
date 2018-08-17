@@ -9,19 +9,22 @@ exports.prepRobotAnswers = answers =>
 exports.buildRobotQuestions = numOfRobots => {
   const robotInfo = [];
   for (var i = 0; i < numOfRobots; i++) {
-    robotInfo.push({
-      type: "input",
-      name: `${i}_position`,
-      description: `what is the position of robot ${i + 1}`,
-      required: true,
-      type: "string"
-    },{
-      type: "input",
-      name: `${i}_move`,
-      description: `what is the move of robot ${i + 1}`,
-      required: true,
-      type: "string"
-    })
+    robotInfo.push(
+      {
+        type: "input",
+        name: `${i}_position`,
+        description: `what is the position of robot ${i + 1}`,
+        required: true,
+        type: "string"
+      },
+      {
+        type: "input",
+        name: `${i}_move`,
+        description: `what is the move of robot ${i + 1}`,
+        required: true,
+        type: "string"
+      }
+    );
   }
 
   return robotInfo;
