@@ -1,47 +1,47 @@
-const { prepRobotAnswers, buildRobotQuestions } = require('../prompt-utils');
+const { prepRobotAnswers, buildRobotQuestions } = require("../prompt-utils");
 
-describe('building robot questions', () => {
-	it('should build two questions based for each robot', () => {
-		const numOfRobots = 3;
+describe("building robot questions", () => {
+  it("should build two questions based for each robot", () => {
+    const numOfRobots = 3;
 
-		const result = buildRobotQuestions(numOfRobots);
+    const result = buildRobotQuestions(numOfRobots);
 
-		expect(result).toHaveLength(numOfRobots * 2);
-	});
+    expect(result).toHaveLength(numOfRobots * 2);
+  });
 
-	const questionTypesTestCases = [['position', 2, 2], ['move', 3, 3]];
+  const questionTypesTestCases = [["position", 2, 2], ["move", 3, 3]];
 
-	test.each(questionTypesTestCases)(
-		'it should have a %s question for each robot',
-		(questionType, numOfRobots, expected) => {
-			const questions = buildRobotQuestions(numOfRobots);
-			const result = questions.reduce((memo, question) => {
-				if (question.name.indexOf(questionType) > -1) {
-					memo.push(question);
-				}
-				return memo;
-			}, []);
+  test.each(questionTypesTestCases)(
+    "it should have a %s question for each robot",
+    (questionType, numOfRobots, expected) => {
+      const questions = buildRobotQuestions(numOfRobots);
+      const result = questions.reduce((memo, question) => {
+        if (question.name.indexOf(questionType) > -1) {
+          memo.push(question);
+        }
+        return memo;
+      }, []);
 
-			expect(result).toHaveLength(expected);
-		}
-	);
+      expect(result).toHaveLength(expected);
+    }
+  );
 });
 
-describe('prepping answers', () => {
-	it('should return correct format of answers', () => {
-		const answers = {
-			'0_position': '1',
-			'0_move': '1s',
-			'1_position': '2',
-			'1_move': '2s'
-		};
-		const expected = {
-			'0': { position: '1', move: '1s' },
-			'1': { position: '2', move: '2s' }
-		};
+describe("prepping answers", () => {
+  it("should return correct format of answers", () => {
+    const answers = {
+      "0_position": "1",
+      "0_move": "1s",
+      "1_position": "2",
+      "1_move": "2s"
+    };
+    const expected = {
+      "0": { position: "1", move: "1s" },
+      "1": { position: "2", move: "2s" }
+    };
 
-		const result = prepRobotAnswers(answers);
+    const result = prepRobotAnswers(answers);
 
-		expect(result).toEqual(expected);
-	});
+    expect(result).toEqual(expected);
+  });
 });
