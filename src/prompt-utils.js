@@ -15,14 +15,13 @@ exports.buildRobotQuestions = numOfRobots => {
       description: `what is the position of robot ${i + 1}`,
       required: true,
       type: "string"
-    });
-    robotInfo.push({
+    },{
       type: "input",
       name: `${i}_move`,
       description: `what is the move of robot ${i + 1}`,
       required: true,
       type: "string"
-    });
+    })
   }
 
   return robotInfo;

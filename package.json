@@ -4,7 +4,8 @@
 	"main": "src/index.js",
 	"license": "MIT",
 	"scripts": {
-		"test": "jest --watch",
+		"test": "jest",
+		"test:watch": "jest --watch",
 		"prettier": "prettier **/*.js **/*.spec.js --write"
 	},
 	"dependencies": {
@@ -14,5 +15,5 @@
 		"jest": "^23.5.0",
 		"pre-commit": "^1.2.2"
 	},
-	"pre-commit": ["prettier"]
+	"pre-commit": ["test", "prettier"]
 }
