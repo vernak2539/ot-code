@@ -1,6 +1,6 @@
 const Arena = require("../arena");
 
-describe("Arena object", () => {
+describe("Arena", () => {
   it("should have dimensions of arena", () => {
     const arena = new Arena("5 4");
 
@@ -55,6 +55,7 @@ describe("Arena object", () => {
     arena.addRobot(sampleInitialisedRobot);
     const robotsPositions = arena.getRobotsPosition();
 
+    // bad tdd, but limited time
     expect(positionSpy).toHaveBeenCalledTimes(1);
     expect(robotsPositions).toEqual([sampleReturn]);
   });
