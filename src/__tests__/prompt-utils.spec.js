@@ -30,14 +30,14 @@ describe("building robot questions", () => {
 describe("prepping answers", () => {
   it("should return correct format of answers", () => {
     const answers = {
-      "0_position": "1",
-      "0_move": "1s",
-      "1_position": "2",
-      "1_move": "2s"
+      "0_position": "1 1",
+      "0_move": "ML",
+      "1_position": "2 2",
+      "1_move": "MM"
     };
     const expected = [
-      { position: "1", move: "1s" },
-      { position: "2", move: "2s" }
+      { position: "1 1", move: "ML" },
+      { position: "2 2", move: "MM" }
     ];
 
     const result = prepRobotAnswers(answers);

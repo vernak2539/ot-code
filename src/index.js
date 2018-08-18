@@ -1,5 +1,5 @@
-const { prepRobotAnswers, buildRobotQuestions } = require("./lib/prep-answers");
-const game = require("./lib/game");
+const { prepRobotAnswers, buildRobotQuestions } = require("./prompt-utils");
+const startRobotWars = require("./start-robot-wars");
 const prompt = require("prompt");
 
 const initialQuestions = [
@@ -24,12 +24,22 @@ prompt.delimiter = "";
 prompt.start();
 
 const processRobotQuestions = initialResults => (err, results) => {
-  const robotMoves = prepRobotAnswers(results);
+  if (err) {
+    console.log(`Oops, something went wrong. Error message: ${err.message}`);
+    return;
+  }
 
-  game(initialResults.arenaSize, robotMoves);
+  const robotsInfo = prepRobotAnswers(results);
+
+  startRobotWars(initialResults.arenaSize, robotsInfo);
 };
 
 const processInitialQuestions = (err, results) => {
+  if (err) {
+    console.log(`Oops, something went wrong. Error message: ${err.message}`);
+    return;
+  }
+
   const robotInfoQuestions = buildRobotQuestions(results.numOfRobots);
 
   prompt.get(robotInfoQuestions, processRobotQuestions(results));
