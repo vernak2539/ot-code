@@ -6,7 +6,8 @@
 	"scripts": {
 		"test": "jest",
 		"test:watch": "jest --watch",
-		"prettier": "prettier **/*.js **/*.spec.js --write"
+		"prettier": "prettier **/*.js **/*.spec.js --write",
+		"pre-commit": "lint-staged"
 	},
 	"dependencies": {
 		"prompt": "^1.0.0"
@@ -15,5 +16,14 @@
 		"jest": "^23.5.0",
 		"pre-commit": "^1.2.2"
 	},
-	"pre-commit": ["test", "prettier"]
+	"pre-commit": [
+		"test",
+		"pre-commit"
+	],
+	"lint-staged": {
+		"*.js": [
+			"prettier --write",
+			"git add"
+		]
+	}
 }
