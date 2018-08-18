@@ -6,7 +6,6 @@
 	"scripts": {
 		"test": "jest",
 		"test:watch": "jest --watch",
-		"prettier": "prettier **/*.js **/*.spec.js --write",
 		"pre-commit": "lint-staged"
 	},
 	"dependencies": {

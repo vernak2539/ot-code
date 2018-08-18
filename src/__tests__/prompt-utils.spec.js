@@ -35,10 +35,10 @@ describe("prepping answers", () => {
       "1_position": "2",
       "1_move": "2s"
     };
-    const expected = {
-      "0": { position: "1", move: "1s" },
-      "1": { position: "2", move: "2s" }
-    };
+    const expected = [
+      { position: "1", move: "1s" },
+      { position: "2", move: "2s" }
+    ];
 
     const result = prepRobotAnswers(answers);
 
