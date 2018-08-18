@@ -5,7 +5,7 @@ module.exports = (arenaSize, robotsInfo) => {
   const arena = new Arena(arenaSize);
 
   robotsInfo.forEach((robotInfo, index) => {
-    const robot = new Robot(index, robotInfo.position);
+    const robot = new Robot(index, robotInfo.position, arena.dimensions);
 
     arena.addRobot(robot);
   });
@@ -14,5 +14,7 @@ module.exports = (arenaSize, robotsInfo) => {
     arena.moveRobot(index, robotInfo.move);
   });
 
-  console.log(arena.getRobotsPosition());
+  console.log(
+    `Final positions of robots --> ${arena.getRobotsPosition().join(", ")}`
+  );
 };
