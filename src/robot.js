@@ -1,12 +1,13 @@
 const { parseInteger } = require("./utils");
 
 module.exports = class Robot {
-  constructor(id, positionString) {
+  constructor(id, positionString, arenaSize) {
     const [x, y, direction] = positionString.split(" ");
 
     this.id = id;
     this.position = { x: parseInteger(x), y: parseInteger(y) };
     this.direction = direction;
+    this.arenaSize = arenaSize;
   }
   move(pattern = "") {
     const splitMovePattern = pattern.split("");
@@ -58,10 +59,17 @@ module.exports = class Robot {
     };
 
     const changeOptions = directionMoveMap[this.direction];
+    const newPosition = changeOptions.change(this.position[changeOptions.axis]);
 
-    this.position[changeOptions.axis] = changeOptions.change(
-      this.position[changeOptions.axis]
-    );
+    if (this._canMove(changeOptions.axis, newPosition)) {
+      this.position[changeOptions.axis] = newPosition;
+    }
+  }
+  _canMove(axis, potentialPosition) {
+    const maxMove = this.arenaSize[axis];
+    const minMove = 0;
+
+    return potentialPosition >= minMove && potentialPosition <= maxMove;
   }
   getPosition() {
     return `${this.position.x} ${this.position.y} ${this.direction}`;

@@ -1,15 +1,21 @@
 const Robot = require("../robot");
 
 describe("Robot", () => {
+  let sampleArenaSize;
+
+  beforeEach(() => {
+    sampleArenaSize = { x: 4, y: 4 };
+  });
+
   it("should store robot id correctly", () => {
     const robotId = 1;
-    const robot = new Robot(robotId, "3 2 E");
+    const robot = new Robot(robotId, "3 2 E", sampleArenaSize);
 
     expect(robot.id).toBe(robotId);
   });
 
   it("should parse position and direction correctly", () => {
-    const robot = new Robot(1, "3 2 E");
+    const robot = new Robot(1, "3 2 E", sampleArenaSize);
 
     // bad tdd, but limited time
     expect(robot.position.x).toBe(3);
@@ -19,7 +25,7 @@ describe("Robot", () => {
 
   it("should return position information", () => {
     const positionInfo = "3 3 N";
-    const robot = new Robot(1, positionInfo);
+    const robot = new Robot(1, positionInfo, sampleArenaSize);
 
     robot.move("LM");
 
@@ -46,7 +52,7 @@ describe("Robot", () => {
     test.each(directionChangeTestCases)(
       "when starting with %s it should rotate %s to face %s",
       (initialPosition, wayToTurn, expected) => {
-        const robot = new Robot(1, initialPosition);
+        const robot = new Robot(1, initialPosition, sampleArenaSize);
 
         robot.move(wayToTurn);
 
@@ -67,9 +73,28 @@ describe("Robot", () => {
       "should move robot along %s axis when direction is %s",
       (axis, direction, coordinates, expected) => {
         const startPosition = `${coordinates} ${direction}`;
-        const robot = new Robot(1, startPosition);
+        const robot = new Robot(1, startPosition, sampleArenaSize);
 
         robot.move("M");
+
+        expect(robot.position[axis]).toBe(expected);
+      }
+    );
+
+    const movingRobotOutsideArenaTestCases = [
+      ["4 4", "E", "M", "x", 4],
+      ["4 4", "N", "M", "x", 4],
+      ["0 0", "W", "M", "x", 0],
+      ["0 0", "S", "M", "x", 0]
+    ];
+
+    test.each(movingRobotOutsideArenaTestCases)(
+      "should not move robot outside arena when starting at %s and facing %s",
+      (initialPosition, direction, movePattern, axis, expected) => {
+        const startPosition = `${initialPosition} ${direction}`;
+        const robot = new Robot(1, startPosition, sampleArenaSize);
+
+        robot.move(movePattern);
 
         expect(robot.position[axis]).toBe(expected);
       }
