@@ -23,6 +23,7 @@ prompt.message = "";
 prompt.delimiter = "";
 prompt.start();
 
+// function that transform answers about individual robots into format required for use later
 const processRobotQuestions = initialResults => (err, results) => {
   if (err) {
     console.log(`Oops, something went wrong. Error message: ${err.message}`);
@@ -34,6 +35,7 @@ const processRobotQuestions = initialResults => (err, results) => {
   startRobotWars(initialResults.arenaSize, robotsInfo);
 };
 
+// function that builds correct questions based on number of robots entered by user
 const processInitialQuestions = (err, results) => {
   if (err) {
     console.log(`Oops, something went wrong. Error message: ${err.message}`);
@@ -45,4 +47,5 @@ const processInitialQuestions = (err, results) => {
   prompt.get(robotInfoQuestions, processRobotQuestions(results));
 };
 
+// initialises prompt to user
 prompt.get(initialQuestions, processInitialQuestions);
