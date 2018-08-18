@@ -1,8 +1,15 @@
 const Robot = require("../robot");
 
 describe("Robot", () => {
+  it("should store robot id correctly", () => {
+    const robotId = 1;
+    const robot = new Robot(robotId, "3 2 E");
+
+    expect(robot.id).toBe(robotId);
+  });
+
   it("should parse position and direction correctly", () => {
-    const robot = new Robot("3 2 E");
+    const robot = new Robot(1, "3 2 E");
 
     // bad tdd, but limited time
     expect(robot.position.x).toBe(3);
@@ -12,11 +19,13 @@ describe("Robot", () => {
 
   it("should return position information", () => {
     const positionInfo = "3 3 N";
-    const robot = new Robot(positionInfo);
+    const robot = new Robot(1, positionInfo);
+
+    robot.move("LM");
 
     const result = robot.getPosition();
 
-    expect(result).toBe(positionInfo);
+    expect(result).toBe("2 3 W");
   });
 
   describe("changing robot direction", () => {
@@ -37,11 +46,32 @@ describe("Robot", () => {
     test.each(directionChangeTestCases)(
       "when starting with %s it should rotate %s to face %s",
       (initialPosition, wayToTurn, expected) => {
-        const robot = new Robot(initialPosition);
+        const robot = new Robot(1, initialPosition);
 
         robot.move(wayToTurn);
 
         expect(robot.direction).toBe(expected);
+      }
+    );
+  });
+
+  describe("moving robot", () => {
+    const movingRobotTestCases = [
+      ["x", "E", "1 1", 2],
+      ["x", "W", "1 1", 0],
+      ["y", "N", "1 1", 2],
+      ["y", "S", "1 1", 0]
+    ];
+
+    test.each(movingRobotTestCases)(
+      "should move robot along %s axis when direction is %s",
+      (axis, direction, coordinates, expected) => {
+        const startPosition = `${coordinates} ${direction}`;
+        const robot = new Robot(1, startPosition);
+
+        robot.move("M");
+
+        expect(robot.position[axis]).toBe(expected);
       }
     );
   });
